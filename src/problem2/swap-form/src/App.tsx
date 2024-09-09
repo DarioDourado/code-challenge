@@ -1,13 +1,16 @@
 import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import CurrencySwapForm from "./componets/CurrenceySwapForm";
+import { Token } from "@mui/icons-material";
+import TokenTable from "./componets/TokenTable";
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header"></header>
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Fancy Currency Swap</h1>
+      <CurrencySwapForm />
+      <TokenTable />
     </div>
   );
-}
+};
 
 export default App;
