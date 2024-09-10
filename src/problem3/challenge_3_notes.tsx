@@ -52,6 +52,7 @@ const WalletPage: React.FC<Props> = (props: Props) => {
         // I will declare lhsPriority variable
         const lhsPriority = getPriority(balance.blockchain); // Could use a more specific variable name
 
+        // Inverted Logical, Fix   return lhsPriority > -99 && balance.amount > 0;
         if (lhsPriority > -99) {
           // lhsPriority no defined on 1st stage
           if (balance.amount <= 0) {
@@ -64,7 +65,8 @@ const WalletPage: React.FC<Props> = (props: Props) => {
         const leftPriority = getPriority(lhs.blockchain);
         const rightPriority = getPriority(rhs.blockchain);
 
-        // Could be reviewed regarding the business rule
+        // Could be reviewed regarding the business rule, but for me make more sense  return rightPriority - leftPriority to sort
+        return rightPriority - leftPriority;
         if (leftPriority > rightPriority) {
           return -1;
         } else if (rightPriority > leftPriority) {
@@ -80,7 +82,7 @@ const WalletPage: React.FC<Props> = (props: Props) => {
     };
   });
 
-  // You should use formattedBalances instead of sortedBalances. It will work either way; however, the objective of associating sortedBalances.map to a constant is to keep the code clean and separate concerns.
+  // You should use formattedBalances instead of sortedBalances when mapping for rows. It will work either way, but the goal of assigning sortedBalances.map to a constant (formattedBalances) is to maintain clean code and separate concerns.
 
   const rows = formattedBalances.map(
     (balance: FormattedWalletBalance, index: number) => {
@@ -100,6 +102,7 @@ const WalletPage: React.FC<Props> = (props: Props) => {
   return <div {...rest}>{rows}</div>;
 };
 
-function useMemo(arg0: () => any, arg1: any[]) {
-  throw new Error("Function not implemented.");
-}
+// This fn could be removed.
+// function useMemo(arg0: () => any, arg1: any[]) {
+//   throw new Error("Function not implemented.");
+// }
