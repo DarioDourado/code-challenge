@@ -10,12 +10,16 @@
 interface WalletBalance {
   currency: string;
   amount: number;
+  blockchain: Blockchain; // add Blockchain
 }
 interface FormattedWalletBalance {
   currency: string;
   amount: number;
   formatted: string;
+  blockchain: Blockchain; // add Blockchain
 }
+
+type Blockchain = "Osmosis" | "Ethereum" | "Arbitrum" | "Zilliqa" | "Neo"; // Type the Blockchain
 
 interface Props extends BoxProps {}
 const WalletPage: React.FC<Props> = (props: Props) => {
@@ -23,7 +27,7 @@ const WalletPage: React.FC<Props> = (props: Props) => {
   const balances = useWalletBalances();
   const prices = usePrices();
 
-  const getPriority = (blockchain: any): number => {
+  const getPriority = (blockchain: Blockchain): number => {
     switch (blockchain) {
       case "Osmosis":
         return 100;
@@ -43,8 +47,10 @@ const WalletPage: React.FC<Props> = (props: Props) => {
   const sortedBalances = useMemo(() => {
     return balances
       .filter((balance: WalletBalance) => {
-        const balancePriority = getPriority(balance.blockchain);
+        // const balancePriority = getPriority(balance.blockchain); // Variable declared but not used anywhere
+
         if (lhsPriority > -99) {
+          // lhsPriority no defined
           if (balance.amount <= 0) {
             return true;
           }
@@ -54,6 +60,7 @@ const WalletPage: React.FC<Props> = (props: Props) => {
       .sort((lhs: WalletBalance, rhs: WalletBalance) => {
         const leftPriority = getPriority(lhs.blockchain);
         const rightPriority = getPriority(rhs.blockchain);
+
         if (leftPriority > rightPriority) {
           return -1;
         } else if (rightPriority > leftPriority) {
@@ -65,7 +72,7 @@ const WalletPage: React.FC<Props> = (props: Props) => {
   const formattedBalances = sortedBalances.map((balance: WalletBalance) => {
     return {
       ...balance,
-      formatted: balance.amount.toFixed(),
+      formatted: balance.amount.toFixed(), // Could use toFixed(4)
     };
   });
 
