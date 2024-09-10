@@ -49,8 +49,11 @@ const WalletPage: React.FC<Props> = (props: Props) => {
       .filter((balance: WalletBalance) => {
         // const balancePriority = getPriority(balance.blockchain); // Variable declared but not used anywhere
 
+        // I will declare lhsPriority variable
+        const lhsPriority = getPriority(balance.blockchain); // Could use a more specific variable name
+
         if (lhsPriority > -99) {
-          // lhsPriority no defined
+          // lhsPriority no defined on 1st stage
           if (balance.amount <= 0) {
             return true;
           }
@@ -61,6 +64,7 @@ const WalletPage: React.FC<Props> = (props: Props) => {
         const leftPriority = getPriority(lhs.blockchain);
         const rightPriority = getPriority(rhs.blockchain);
 
+        // Could be reviewed regarding the business rule
         if (leftPriority > rightPriority) {
           return -1;
         } else if (rightPriority > leftPriority) {
@@ -76,7 +80,9 @@ const WalletPage: React.FC<Props> = (props: Props) => {
     };
   });
 
-  const rows = sortedBalances.map(
+  // You should use formattedBalances instead of sortedBalances. It will work either way; however, the objective of associating sortedBalances.map to a constant is to keep the code clean and separate concerns.
+
+  const rows = formattedBalances.map(
     (balance: FormattedWalletBalance, index: number) => {
       const usdValue = prices[balance.currency] * balance.amount;
       return (
@@ -93,6 +99,7 @@ const WalletPage: React.FC<Props> = (props: Props) => {
 
   return <div {...rest}>{rows}</div>;
 };
+
 function useMemo(arg0: () => any, arg1: any[]) {
   throw new Error("Function not implemented.");
 }
