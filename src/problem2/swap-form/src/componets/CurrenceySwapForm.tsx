@@ -2,21 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { fetchTokenPrices } from "../services/api";
 import { TextField, Button, MenuItem } from "@mui/material";
+import { FormInputs, TokenData } from "./Interfaces";
 
-interface FormInputs {
-  fromCurrency: string;
-  toCurrency: string;
-  amount: number;
-}
 
-interface TokenData {
-  currency: string;
-  price: number;
-}
+const BASE_URL = process.env.BASE_URL
+console.log(BASE_URL)
 
 const getIconUrl = (currency: string): string => {
   const baseUrl =
-    "https://raw.githubusercontent.com/Switcheo/token-icons/main/tokens/";
+    "https://raw.githubusercontent.com/Switcheo/token-icons/main/tokens/"; // .env BASE_TOKENS_URL
   const formattedCurrency = currency.replace(/ /g, "-").toUpperCase();
 
   return `${baseUrl}${formattedCurrency}.svg`;

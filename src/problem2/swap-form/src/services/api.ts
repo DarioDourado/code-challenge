@@ -1,9 +1,6 @@
 import axios from "axios";
+import { TokenData } from "../componets/Interfaces";
 
-interface TokenData {
-  currency: string;
-  price: number;
-}
 
 const api = axios.create({
   baseURL: process.env.REACT_APP_API_URL,

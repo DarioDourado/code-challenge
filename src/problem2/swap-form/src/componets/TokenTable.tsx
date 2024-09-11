@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { TokenData } from "./Interfaces";
 
-interface TokenData {
-  currency: string;
-  price: number;
-}
 
 const fetchTokenPrices = async (): Promise<TokenData[]> => {
   try {
     const response = await axios.get(
-      "https://interview.switcheo.com/prices.json"
+      "https://interview.switcheo.com/prices.json" // .env BASE_JSON_URL
     );
     return response.data;
   } catch (error) {
@@ -43,7 +40,7 @@ const TokenTable: React.FC = () => {
     const loadIcons = async () => {
       const iconsMap: Record<string, string> = {};
       for (const item of data) {
-        const url = `https://raw.githubusercontent.com/Switcheo/token-icons/main/tokens/${item.currency}.svg`;
+        const url = `https://raw.githubusercontent.com/Switcheo/token-icons/main/tokens/${item.currency}.svg`; // .env BASE_TOKENS_URL
         try {
           await axios.get(url);
           iconsMap[item.currency] = url;
